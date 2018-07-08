@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>
+
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-61077297-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      if( !location.hostname != 'localhost' ) gtag('config', 'UA-61077297-1');
+    </script>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=1">
+
+    <meta name="author" content="Kazumi Inada">
+
+    <title>Reversi</title>
+
+  </head>
+
+  <body>
+
+    <div id="app">
+
+      <div v-show="connectionOK">
+      
+        <div ref="board"></div>
+        <input type="button" @click="signInWithTwitter" value="Twitterでログイン" v-if="!user" class="button">
+        <div v-if="room">
+
+          <div v-if="room.status === 1 && !room.isOwnerActive" class="frame msg">オーナーがオフラインです</div>
+          <div v-if="room.status === 1 && !room.challenger && room.isOwnerActive" class="frame msg">対戦者を受付中です</div>
+          <div v-if="room.status === 1 && room.challenger && ( !user || room.challenger.uid !== user.uid )" class="frame msg warn">ユーザーが対戦を申し込んでいます</div>
+          <div v-if="room.status === 1 && room.challenger && ( !user || room.challenger.uid === user.uid )" class="frame msg warn">オーナーの応答を待っています</div>
+          <div v-if="room.status === 3" class="frame msg">ゲームが終了しました</div>
+          <div v-if="room.status === 2">
+            <div v-if="!room.isOwnerActive" class="frame msg">オーナーがオフラインです</div>
+            <div v-if="!room.isChallengerActive" class="frame msg">対戦者がオフラインです</div>
+            <div v-else-if="room.committer === 0 && ( !user || room.challenger.uid !== user.uid )" class="frame msg blue">挑戦者の入力を待っています</div>
+            <div v-else-if="room.committer === 1 && ( !user || room.owner.uid !== user.uid )" class="frame msg blue">オーナーの入力を待っています</div>
+            <div v-else class="frame msg red">あなたの番です</div>
+          </div>
+
+          <div v-if="user && room.owner.uid === user.uid">
+            <input type="button" @click="startGame" value="ゲームをはじめる" v-if="room.challenger && room.status === 1" class="button red">
+            <input type="button" @click="resetGame" value="次の対戦者を受け付ける" v-if="room.challenger && room.status === 3" class="button">
+            <input type="button" @click="resetGame" value="ゲームをリセット" v-if="!room.isChallengerActive && room.status === 2" class="button">
+          </div>
+
+          <div class="frame users">
+            <div v-if="room.owner" class="user">
+              <img :src="room.owner.photoURL || 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='" class="avator">
+              <span class="label">{{ room.owner.displayName }}</span>
+              <span class="badge black">オーナー</span>
+              <span class="badge score">{{ blackLength }}</span>
+            </div>
+            <div v-if="room.challenger" class="user">
+              <img :src="room.challenger.photoURL || 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='" class="avator">
+              <span class="label">{{ room.challenger.displayName }}</span>
+              <span class="badge white" :class="{ winner: room.status === 3 && whiteLength <= blackLength }">挑戦者</span>
+              <span class="badge score" :class="{ winner: room.status === 3 && whiteLength >= blackLength }">{{ whiteLength }}</span>
+            </div>
+          </div>
+
+          <div v-if="user && room.owner.uid === user.uid">
+            <input type="button" @click="inviteBot" value="ボットと対戦" v-if="room.status === 1 && !room.challenger" class="button">
+          </div>
+
+          <div v-if="user && room.owner.uid !== user.uid">
+            <input type="button" value="このユーザーと対戦する" @click="challenge" v-if="!room.challenger && room.status === 1" class="button">
+          </div>
+
+          <div class="frame info">
+            <div class="listener">{{ room.listenersLength }}人のユーザーが閲覧中</div>
+          </div>
+
+          <a :href="'https://twitter.com/intent/tweet?related=nandenjin&text=%E3%82%AA%E3%82%BB%E3%83%AD%E5%AF%BE%E6%88%A6%E5%BE%85%E6%A9%9F%E4%B8%AD%E2%9C%8B&url=' + url" class="button" target="_blank" style="background: #48f;">Twitterでゲームボードを共有</a>
+          <input type="button" @click="signout" value="ログアウト" v-if="user" class="button gray">
+
+        </div>
+
+      </div>
+
+
+      <div v-if="!connectionOK" class="connecting">
+        <div class="circle"></div>
+        <p>サーバーに接続しています...</p>
+      </div>
+
+    </div>
+    
+    <script src="./bundle.js"></script>
+
+  </body>
+
+</html>

@@ -1,0 +1,229 @@
+
+
+html, body{
+
+  width: 100%;
+  height: 100%;
+  margin: 0;
+
+  color: #000;
+  background-color: #ddd;
+
+}
+
+a {
+
+  text-decoration: none;
+
+}
+
+.reversi-board {
+
+  width: calc( 100vw - 30px );
+  height: calc( 100vw - 30px );
+  margin: 15px;
+  border-radius: 15px;
+  overflow: hidden;
+  border: 2px solid #000;
+
+}
+
+.reversi-board__cell--white:before{
+
+  border: 2px solid #000;
+
+}
+
+.reversi-board__cell--black:before{
+
+  border: 2px solid #fff;
+
+}
+
+.frame {
+
+  margin: 10px 15px;
+  background-color: #fff;
+  border: 2px solid #000;
+  border-radius: 15px;
+
+}
+
+.button {
+
+  display: block;
+  width: calc( 100vw - 30px );
+  margin: 10px 15px;
+  padding: 7px 0;
+  text-align: center;
+  color: #000;
+  background-color: #6bf;
+  font: bold 15px sans-serif;
+  border: 2px solid #000;
+  border-radius: 15px;
+
+  &.gray {
+
+    background-color: #ccc;
+
+  }
+
+}
+
+.msg {
+
+  padding: 5px 15px;
+  font: bold 14px sans-serif;
+  background-color: #4fb;
+
+  &.warn {
+
+    background-color: #fb4;
+
+  }
+
+  &.red {
+
+    background-color: #f4b;
+
+  }
+
+  &.blue {
+
+    background-color: #88f;
+
+  }
+
+}
+
+.info {
+
+  display: flex;
+
+  .listener{
+
+    flex: 1 1 auto;
+    margin: 5px 10px;
+    font: bold 13px sans-serif;
+
+  }
+
+}
+
+.users {
+
+  .user {
+
+    margin: 15px;
+    font: bold 14px sans-serif;
+
+    .avator {
+
+      width: 30px;
+      height: 30px;
+      border: 2px solid #000;
+      border-radius: 50%;
+      vertical-align: middle;
+
+    }
+
+    .label {
+
+      display: inline-block;
+      margin: 0 10px;
+
+    }
+
+    .badge {
+
+      display: inline-block;
+      font: bold 11px sans-serif;
+      border: 2px solid #000;
+      border-radius: 13px;
+      padding: 3px 7px;
+      text-align: center;
+
+    }
+
+    .black {
+
+      color: #fff;
+      background-color: #000;
+
+    }
+
+    .score {
+
+      min-width: 27px;
+      height: 27px;
+      box-sizing: border-box;
+      color: #fff;
+      background-color: #09f;
+      border-color: #09f;
+
+      &.winner {
+
+        animation: winner 0.5s ease 0s alternate infinite;
+
+      }
+
+      @keyframes winner{
+
+        0% {
+          background-color: #f09;
+          border-color: #f09;
+        }
+
+        100% {
+          background-color: #907;
+          border-color: #907;
+        }
+
+      }
+
+    }
+
+  }
+
+}
+
+
+.url {
+
+  padding: 10px 10px;
+  font: bold 13px sans-serif;
+
+}
+
+
+.connecting {
+
+  position: fixed;
+  top: 0; left: 0; 
+  right: 0; bottom: 0;
+  width: 250px;
+  height: 300px;
+  margin: auto;
+  text-align: center;
+  font: bold 13px sans-serif;
+
+  .circle {
+
+    width: 150px;
+    height: 150px;
+    margin: 50px;
+    border: 3px solid transparent;
+    border-color: #000 #000 transparent transparent;
+    border-radius: 50%;
+    animation: circle 0.5s linear 0s infinite;
+
+  }
+
+  @keyframes circle {
+
+    0% { transform: rotate( 0deg ) }
+    100% { transform: rotate( 360deg ) }
+
+  }
+
+}
