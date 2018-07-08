@@ -9,7 +9,7 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 
 // サーバーホスト
-const HOST = 'http://localhost:3000';
+const HOST = location.port == "8080" ? location.protocol + '//' + location.hostname + ':3000' : location.protocol + '//' + location.host;
 
 let socket = null;
 
