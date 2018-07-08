@@ -195,8 +195,6 @@ class Room{
     const isOwnerOK = board.getSuggestions( this.board.constructor.colors.BLACK ).length > 0;
     const isChallengerOK = board.getSuggestions( this.board.constructor.colors.WHITE ).length > 0;
 
-    console.log(board.getSuggestions( this.board.constructor.colors.BLACK ),board.getSuggestions( this.board.constructor.colors.WHITE ));
-
     if( !isOwnerOK && !isChallengerOK ){
 
       this.broadcastBoardData();
