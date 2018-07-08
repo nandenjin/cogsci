@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/nandenjin/cogsci#readme",
   "devDependencies": {
+    "copy-webpack-plugin": "^4.5.2",
     "css-loader": "^0.28.11",
     "hotnode": "0.0.8",
     "html-loader": "^0.5.5",
