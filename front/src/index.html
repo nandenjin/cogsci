@@ -32,7 +32,7 @@
 
   <body>
 
-    <div id="app">
+    <div id="app" style="display: none;">
 
       <div v-show="connectionOK">
       
@@ -80,32 +80,36 @@
 
           <div v-if="user && room.owner.uid === user.uid">
             <input type="button" @click="inviteBot" value="ボットと対戦" v-if="room.status === 1 && !room.challenger" class="button">
-            <input type="button" value="対戦が申し込まれた時に通知する" @click="requestNotification" v-if="!notificationEnabled && room.status === 1 && !room.challenger" class="button">
+            <input type="button" value="対戦が申し込まれた時に通知する" @click="requestNotification" v-if="!notificationEnabled && room.status === 1 && !room.challenger" class="button orange">
           </div>
 
           <div v-if="user && room.owner.uid !== user.uid">
             <input type="button" value="このユーザーと対戦する" @click="challenge" v-if="!room.challenger && room.status === 1" class="button">
           </div>
 
-          <a :href="'https://twitter.com/intent/tweet?related=nandenjin&text=%E3%82%AA%E3%82%BB%E3%83%AD%E5%AF%BE%E6%88%A6%E5%BE%85%E6%A9%9F%E4%B8%AD%E2%9C%8B&url=' + url" class="button" target="_blank" style="background: #48f;">Twitterでこの画面を共有</a>
+          <a :href="'https://twitter.com/intent/tweet?related=nandenjin&text=%E3%82%AA%E3%82%BB%E3%83%AD%E5%AF%BE%E6%88%A6%E5%BE%85%E6%A9%9F%E4%B8%AD%EF%BC%81+%23CogSciReversi+&url=' + url" class="button" target="_blank" style="background: #48f;">Twitterでこの画面を共有</a>
           <input type="button" @click="signout" value="ログアウト" v-if="user" class="button gray">
 
         </div>
 
       </div>
 
+      <footer v-if="connectionOK" class="footer">
+        <a href="https://www.nandenjin.com/">nandenjin.com</a> | <a href="#">About this app</a>
+      </footer>
 
       <div v-if="!connectionOK" class="connecting">
         <div class="circle"></div>
         <p>サーバーに接続しています...</p>
       </div>
 
-
     </div>
 
     <div class="pc-not-available">
       スマートフォンの縦画面でご利用ください。
     </div>
+
+    <div></div>
     
     <script src="./bundle.js"></script>
 

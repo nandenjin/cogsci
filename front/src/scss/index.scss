@@ -34,10 +34,16 @@ a {
   line-height: 50px;
 }
 
+#app {
+
+  display: block !important;
+
+}
+
 @media only screen and (orientation:landscape){
    
    #app {
-      display: none;
+      display: none !important;
    }
 
    .pc-not-available{
@@ -100,6 +106,12 @@ a {
 
     background-color: #f69;
     animation: red-blink 0.5s linear 0s alternate infinite;
+
+  }
+
+  &.orange {
+
+    background-color: #fc9;
 
   }
 
@@ -234,6 +246,25 @@ a {
 
   padding: 10px 10px;
   font: bold 13px sans-serif;
+
+}
+
+.footer {
+
+  margin: 25px 15px;
+  text-align: center;
+  color: #444;
+
+  a {
+
+    display: inline-block;
+    font: normal 13px monospace, sans-serif;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    color: #444;
+    margin: 0 10px;
+
+  }
 
 }
 
