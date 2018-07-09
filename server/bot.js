@@ -47,6 +47,27 @@ socket.on( 'connect_error', e => {
 
 } );
 
+setInterval( () => {
+
+  for( let id in rooms ) {
+
+    const room = rooms[ id ];
+
+    if( room.owner && room.owner.uid === UID ) {
+
+      if( room.isChallengerActive )
+        room.challengerLastActive = Date.now();
+
+      if( Date.now() - room.challengerLastActive > 60 * 1000 )
+        socket.emit( 'resetGame', id );
+
+    }
+
+  }
+
+}, 10 * 1000 );
+
+
 socket.on( 'roomInfo', ( info, id ) => {
 
   rooms[ id ] = rooms[ id ] || {};
@@ -54,21 +75,6 @@ socket.on( 'roomInfo', ( info, id ) => {
   for( let key in info ) rooms[ id ][ key ] = info[ key ];
 
   const room = rooms[ id ];
-  if( room.owner && room.owner.uid == UID ) {
-
-    if( !room.isChallengerActive ) {
-
-      // 指定秒数後にも同じ状態ならリセット
-      setTimeout( () => {
-
-        if( !room.isChallengerActive )
-          socket.emit( 'resetGame', id );
-
-      }, 1000 * 60 );
-
-    }
-
-  }
 
 } );
 
