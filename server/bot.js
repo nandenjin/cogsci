@@ -255,16 +255,13 @@ function rotate90Vec2( vec, n ) {
 
 function tokenize66( arr ) {
 
-  let ar = arr;
   const pf = [];
 
   for( let n = 0; n < 4; n++ ) {
 
-    const token = tokenize( ar );
+    const token = tokenize( rotate90Array66( arr, n ) );
 
     pf.push( { token, n } );
-
-    ar = rotate90Array66( ar );
 
   }
 
