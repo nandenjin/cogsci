@@ -59,7 +59,7 @@ socket.on( 'challengerJoined', id => {
 
   const room = rooms[ id ] || {};
 
-  if( room.owner || room.owner.uid === UID ) {
+  if( room.owner && room.owner.uid === UID ) {
 
     setTimeout( () => socket.emit( 'setStatus', id, 'ONGOING' ), 1500 );
 
