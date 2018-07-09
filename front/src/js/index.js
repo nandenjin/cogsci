@@ -258,6 +258,7 @@ const app = new Vue( {
 
     signout() {
 
+      this.user = null;
       firebase.auth().signOut();
 
     },
