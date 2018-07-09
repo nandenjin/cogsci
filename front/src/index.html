@@ -88,8 +88,11 @@
           </div>
 
           <a :href="'https://twitter.com/intent/tweet?related=nandenjin&text=%E3%82%AA%E3%82%BB%E3%83%AD%E5%AF%BE%E6%88%A6%E5%BE%85%E6%A9%9F%E4%B8%AD%EF%BC%81+%23CogSciReversi+&url=' + url" class="button" target="_blank" style="background: #48f;">Twitterでこの画面を共有</a>
-          <input type="button" @click="signout" value="ログアウト" v-if="user" class="button gray">
 
+        </div>
+
+        <div>
+          <input type="button" @click="signout" value="ログアウト" v-if="user" class="button gray">
         </div>
 
         <footer class="footer">
