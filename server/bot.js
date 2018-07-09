@@ -20,6 +20,7 @@ const operationSchema = {
   }
 };
 
+const UID = 'bot';
 
 const io = require( 'socket.io-client' );
 
@@ -36,6 +37,8 @@ socket.on( 'connect', () => {
   socket.emit( 'registerBot' );
   socket.emit( 'registerPipe' );
 
+  socket.emit( 'openById', 'bot' );
+
 } );
 
 socket.on( 'connect_error', e => {
@@ -44,6 +47,25 @@ socket.on( 'connect_error', e => {
 
 } );
 
+socket.on( 'roomInfo', ( info, id ) => {
+
+  rooms[ id ] = rooms[ id ] || {};
+
+  for( let key in info ) rooms[ id ][ key ] = info[ key ];
+
+} );
+
+socket.on( 'challengerJoined', id => {
+
+  const room = rooms[ id ] || {};
+
+  if( room.owner || room.owner.uid === UID ) {
+
+    setTimeout( () => socket.emit( 'setStatus', id, 'ONGOING' ), 1500 );
+
+  }
+
+} );
 
 socket.on( 'put', ( cursor, role, arr ) => {
 
@@ -148,6 +170,7 @@ socket.on( 'commitRequested', ( id, boardData ) => {
 
       console.log( 'No hit for token = ' + token );
 
+      room.board = room.board || new reversi.Board( 6, 6 );
       room.board.loadArray( boardData );
       let suggestions = room.board.getSuggestions( room.role )
       .map( c => { return { cursor: c, affectLength: room.board.simulateEffect( c, room.role ).length } } );
@@ -179,6 +202,13 @@ socket.on( 'commitRequested', ( id, boardData ) => {
 socket.on( 'gameSet', ( id, data ) => {
 
   rooms[ id ] = rooms[ id ] || {};
+
+  if( rooms[ id ].owner.uid === UID ) {
+
+    setTimeout( () => socket.emit( 'resetGame', id ), 5000 );
+
+  }
+
   const myLength = data.filter( l => l === rooms[ id ].role ).length;
   const enLength = 36 - myLength - data.filter( l => l === 0 ).length;
 

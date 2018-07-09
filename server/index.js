@@ -272,7 +272,7 @@ io.on( 'connection', socket => {
 
     console.log( 'A pipe connected.' );
     if( !pipes.some( p => p === socket ) ) pipes.push( socket );
-    socket.uid = 'pipe' + Math.floor( Math.random() * 100000000 );
+    socket.uid = 'bot';
     socket.user.uid = socket.uid;
     socket.user.displayName = 'ボット';
     socket.user.photoURL = '/favicon.png';
