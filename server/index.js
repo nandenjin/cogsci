@@ -275,7 +275,7 @@ io.on( 'connection', socket => {
     socket.uid = 'pipe' + Math.floor( Math.random() * 100000000 );
     socket.user.uid = socket.uid;
     socket.user.displayName = 'ボット';
-    socket.user.photoURL = 'https://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png';
+    socket.user.photoURL = '/favicon.png';
 
   } ); 
 
