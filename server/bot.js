@@ -240,6 +240,12 @@ socket.on( 'gameSet', ( id, data ) => {
 
 } );
 
+socket.on( 'invalidOpr', id => {
+
+  console.log( '! Server returned invalidOpr error. @' + id );
+
+} );
+
 function rotate90Array66( arr, n ) {
 
   const res = [];
