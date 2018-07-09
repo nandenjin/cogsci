@@ -64,12 +64,12 @@
               <img :src="room.owner.photoURL || 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='" class="avator">
               <span class="label">{{ room.owner.displayName }}</span>
               <span class="badge black">オーナー</span>
-              <span class="badge score">{{ blackLength }}</span>
+              <span class="badge score" :class="{ winner: room.status === 3 && whiteLength <= blackLength }">{{ blackLength }}</span>
             </div>
             <div v-if="room.challenger" class="user">
               <img :src="room.challenger.photoURL || 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='" class="avator">
               <span class="label">{{ room.challenger.displayName }}</span>
-              <span class="badge white" :class="{ winner: room.status === 3 && whiteLength <= blackLength }">挑戦者</span>
+              <span class="badge white">挑戦者</span>
               <span class="badge score" :class="{ winner: room.status === 3 && whiteLength >= blackLength }">{{ whiteLength }}</span>
             </div>
           </div>
