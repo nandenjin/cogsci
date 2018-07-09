@@ -8,6 +8,8 @@ import * as reversi from 'reversi/build/reversi.module.js';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
+import Push from 'push.js';
+
 // サーバーホスト
 const HOST = location.port == "8080" ? location.protocol + '//' + location.hostname + ':3000' : location.protocol + '//' + location.host;
 
@@ -57,6 +59,7 @@ const app = new Vue( {
     url: location.href,
 
     connectionOK: false,
+    notificationEnabled: false,
 
   },
 
@@ -81,6 +84,8 @@ const app = new Vue( {
       else if( this.user ) socket.emit( 'openById', this.user.uid );
 
     } );
+
+    setInterval( () => this.notificationEnabled = Push.Permission.has(), 5000 );
 
     renderer.on( 'click', cursor => this.commit( renderer.role, cursor ) );
 
@@ -163,7 +168,26 @@ const app = new Vue( {
         setTimeout( () => this.$emit( 'connectionReady' ), 3000 );
 
       } );
-      socket.on( 'challengerJoined', () => console.info( 'Challenger joined.' ) );
+
+      socket.on( 'challengerJoined', () => {
+
+        if( Push.Permission.has() && typeof document.hidden !== "undefined" )
+          Push.create( '挑戦者が現れました！', {
+
+            body: 'ページを開いてゲームを始めましょう',
+            icon: '/favicon.png',
+            onClick() {
+
+              window.focus();
+              this.close();
+
+            }
+
+          } );
+
+        console.info( 'Challenger joined.' );
+
+      } );
 
       socket.on( 'disconnect', () => this.connectionOK = false )
 
@@ -232,7 +256,13 @@ const app = new Vue( {
 
       firebase.auth().signOut();
 
-    }
+    },
+
+    requestNotification() {
+
+      Push.Permission.request( () => this.notificationEnabled = true );
+
+    },
 
   },
 

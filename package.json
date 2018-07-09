@@ -45,6 +45,7 @@
     "express": "^4.16.3",
     "firebase": "^5.2.0",
     "firebase-admin": "^5.12.1",
+    "push.js": "^1.0.5",
     "realm": "^2.12.0",
     "reversi": "git+https://github.com/nandenjin/reversi-js.git#master",
     "socket.io": "^2.1.1",
