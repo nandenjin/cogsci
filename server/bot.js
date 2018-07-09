@@ -53,6 +53,23 @@ socket.on( 'roomInfo', ( info, id ) => {
 
   for( let key in info ) rooms[ id ][ key ] = info[ key ];
 
+  const room = rooms[ id ];
+  if( room.owner && room.owner.uid == UID ) {
+
+    if( !room.isChallengerActive ) {
+
+      // 指定秒数後にも同じ状態ならリセット
+      setTimeout( () => {
+
+        if( !room.isChallengerActive )
+          socket.emit( 'resetGame', id );
+
+      }, 1000 * 60 );
+
+    }
+
+  }
+
 } );
 
 socket.on( 'challengerJoined', id => {
