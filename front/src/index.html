@@ -34,7 +34,7 @@
 
     <div id="app" style="display: none;">
 
-      <div v-show="connectionOK">
+      <div v-show="connectionOK && !notFound">
       
         <div ref="board"></div>
         <input type="button" @click="signInWithTwitter" value="Twitterでログイン" v-if="!user" class="button">
@@ -92,12 +92,19 @@
 
         </div>
 
+        <footer class="footer">
+          <div><a href="/">自分のゲームテーブルを開く</a></div>
+          <div><a href="https://www.nandenjin.com/">nandenjin.com</a> | <a href="#">About this app</a></div>
+        </footer>
+
       </div>
 
-      <footer v-if="connectionOK" class="footer">
-        <div><a href="/">自分のゲームテーブルを開く</a></div>
-        <div><a href="https://www.nandenjin.com/">nandenjin.com</a> | <a href="#">About this app</a></div>
-      </footer>
+      <div v-if="connectionOK && notFound" class="not-found">
+        
+        <h1>見つかりません</h1>
+        <input type="button" value="もういっぺん" @click="reload" class="button white">
+
+      </div>
 
       <div v-if="!connectionOK" class="connecting">
         <div class="circle"></div>

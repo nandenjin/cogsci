@@ -61,6 +61,8 @@ const app = new Vue( {
     connectionOK: false,
     notificationEnabled: false,
 
+    notFound: false,
+
   },
 
   mounted() {
@@ -111,6 +113,7 @@ const app = new Vue( {
 
       socket.on( 'roomInfo', info => {
         console.log( 'Info received.' );
+        this.notFound = false;
         this.room = info;
       } ); 
 
@@ -261,6 +264,12 @@ const app = new Vue( {
     requestNotification() {
 
       Push.Permission.request( () => this.notificationEnabled = true );
+
+    },
+
+    reload() {
+
+      location.reload();
 
     },
 
