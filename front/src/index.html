@@ -84,7 +84,7 @@
           </div>
 
           <div v-if="user && room.owner.uid !== user.uid">
-            <input type="button" value="このユーザーと対戦する" @click="challenge" v-if="!room.challenger && room.status === 1" class="button">
+            <input type="button" value="このユーザーと対戦する" @click="challenge" v-if="!room.challenger && room.status === 1" class="button orange">
           </div>
 
           <a :href="'https://twitter.com/intent/tweet?related=nandenjin&text=%E3%82%AA%E3%82%BB%E3%83%AD%E5%AF%BE%E6%88%A6%E5%BE%85%E6%A9%9F%E4%B8%AD%EF%BC%81+%23CogSciReversi+&url=' + url" class="button" target="_blank" style="background: #48f;">Twitterでこの画面を共有</a>
