@@ -129,7 +129,7 @@ class Room{
 
     this.challenger = socket.user;
 
-    this.broadcast( 'challengerJoined' );
+    this.broadcast( 'challengerJoined', this.id );
 
     this.addListener( socket );
     this.broadcastInfo();

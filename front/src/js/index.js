@@ -166,15 +166,16 @@ const app = new Vue( {
       socket.on( 'notFound', () => {
 
         console.warn( 'Room not found.' );
+        this.notFound = true;
 
         // リトライ
         setTimeout( () => this.$emit( 'connectionReady' ), 3000 );
 
       } );
 
-      socket.on( 'challengerJoined', () => {
+      socket.on( 'challengerJoined', id => {
 
-        if( Push.Permission.has() && typeof document.hidden !== "undefined" )
+        if( Push.Permission.has() && typeof document.hidden !== "undefined" && this.owner && this.owner.uid == this.user.uid )
           Push.create( '挑戦者が現れました！', {
 
             body: 'ページを開いてゲームを始めましょう',
