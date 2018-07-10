@@ -157,6 +157,11 @@ socket.on( 'commitRequested', ( id, boardData ) => {
   rooms[ id ] = rooms[ id ] || {};
   const room = rooms[ id ];
 
+  const invalidFlag = room.invalidFlag;
+  room.invalidFlag = false;
+
+  if( invalidFlag ) console.log( 'Force skip DB-based search.' );
+
   openDB().then( db => {
 
     const bd = boardData.map( a => room.role === 1 ? a : revertPiece( a ) );
@@ -168,7 +173,7 @@ socket.on( 'commitRequested', ( id, boardData ) => {
     const o = db.objectForPrimaryKey( 'State', token );
     let cursor;
 
-    if( o ) {
+    if( o && !invalidFlag ) {
 
       ua.event( 'Bot', 'hit', token ).send();
 
@@ -243,6 +248,7 @@ socket.on( 'gameSet', ( id, data ) => {
 socket.on( 'invalidOpr', id => {
 
   console.log( '! Server returned invalidOpr error. @' + id );
+  ( room[ id ] || {} ).invalidFlag = true;
 
 } );
 

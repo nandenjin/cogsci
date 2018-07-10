@@ -190,8 +190,10 @@ io.on( 'connection', socket => {
     }else {
 
       console.log( 'Commit rejected: invalidOpr' );
-      socket.emit( 'invalidOpr' );
+      socket.emit( 'invalidOpr', id );
       room.broadcastBoardData();
+      room.sendStepSignal();
+      
     }
 
   } );
