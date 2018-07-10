@@ -160,7 +160,6 @@ socket.on( 'commitRequested', ( id, boardData ) => {
   const invalidFlag = room.invalidFlag;
   room.invalidFlag = false;
 
-  if( invalidFlag ) console.log( 'Force skip DB-based search.' );
 
   openDB().then( db => {
 
@@ -196,7 +195,8 @@ socket.on( 'commitRequested', ( id, boardData ) => {
 
       ua.event( 'Bot', 'notHit', token ).send();
 
-      console.log( 'No hit for token = ' + token );
+      if( !invalidFlag ) console.log( 'No hit for token = ' + token );
+      else console.log( 'Force skip DB-based search.' );
 
       room.board = room.board || new reversi.Board( 6, 6 );
       room.board.loadArray( boardData );
