@@ -248,7 +248,7 @@ socket.on( 'gameSet', ( id, data ) => {
 socket.on( 'invalidOpr', id => {
 
   console.log( '! Server returned invalidOpr error. @' + id );
-  ( room[ id ] || {} ).invalidFlag = true;
+  ( rooms[ id ] || {} ).invalidFlag = true;
 
 } );
 
